@@ -96,3 +96,11 @@ export const StyledSignupForm = styled.form`
     margin-top: .5rem;
   }
 `;
+
+export const StyledError = styled.div`
+  color: red;
+`;
+
+export const StyledAlert = styled.div`
+  color: green;
+`;
