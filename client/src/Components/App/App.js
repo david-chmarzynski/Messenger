@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 // IMPORT COMPONENTS
 import Contact from '../Contact/Contact';
 import Message from '../Message/Message';
+import Sign from '../Sign/Sign';
 
 // SOCKETS
 let ios;
@@ -19,8 +20,9 @@ const App = () => {
   });
   return (
     <div id="App">
-      <Contact />
-      <Message />
+      {/* <Contact />
+      <Message /> */}
+      <Sign />
     </div>
   );
 }
