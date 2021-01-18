@@ -64,11 +64,35 @@ export const StyledFooter = styled.footer`
 `;
 
 export const StyledSignup = styled.div`
-  width: 50%;
+  width: 100%;
   height: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  color: #0199ff;
+  text-align: center;
+  flex-wrap: wrap;
+  color: black;
+
+  h1 {
+    width: 100%;
+  }
+`;
+
+export const StyledSignupForm = styled.form`
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    margin-bottom: .7rem;
+  }
+
+  button {
+    font-weight: 800;
+    margin-top: .5rem;
+  }
 `;

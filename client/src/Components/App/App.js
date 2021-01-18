@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import io from 'socket.io-client';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // IMPORT COMPONENTS
 import Contact from '../Contact/Contact';
@@ -13,17 +14,27 @@ let ios;
 const App = () => {
   // STATES
   const [username, setUsername] = useState('');
+  const [isOnline, setIsOnline] = useState(false);
 
   // INIT SOCKET.IO
   useEffect(() => {
     ios = io();
   });
   return (
+    <Router>
     <div id="App">
-      {/* <Contact />
-      <Message /> */}
-      <Sign />
+      {!isOnline && (
+        <Sign />
+      )}
+      {isOnline && (
+        <>
+        <Contact />
+        <Message />
+        </>
+      )}
+
     </div>
+    </Router>
   );
 }
 

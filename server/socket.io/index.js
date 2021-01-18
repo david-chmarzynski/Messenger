@@ -11,7 +11,7 @@ const messenger = ios.of('/messenger');
 
 // CONFIG IOS
 ios.on('connect', (socket) => {
-  console.log("New connection");
+  
 });
 
 // CONFIG MESSENGER
