@@ -135,7 +135,7 @@ export const StyledPersonalMessage = styled.div`
   flex-direction: column;
 
   p {
-    width: 45%;
+    max-width: 45%;
     margin: 1rem 3rem 1rem auto;
     background-color: #0199ff;
     padding: .8rem 1rem;

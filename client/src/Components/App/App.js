@@ -24,6 +24,9 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('Erreur');
   const [alertMessage, setAlertMessage] = useState('');
   const [onlineUsers, setOnlineUsers] = useState();
+  const [roomId, setRoomId] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
 
   // INIT SOCKET.IO
   useEffect(() => {
@@ -36,8 +39,13 @@ const App = () => {
       messenger = io('/messenger');
 
       messenger.on('connect', () => {
+
         messenger.on('getUsers', (res) => {
           setOnlineUsers(res);
+        });
+
+        messenger.on('getMessages', (res) => {
+          setMessages(res);
         });
       });
     }
@@ -77,6 +85,24 @@ const App = () => {
       setErrorMessage('Les mots de passe ne correspondent pas');
     }
   };
+
+  const joinRoom = (e) => {
+    e.preventDefault();
+    const id = e.currentTarget.id;
+    const ids = {userId, id};
+    messenger.emit('joinRoom', ids, (res) => {
+      setRoomId(res.roomId);
+      setMessages(res.messages);
+    });
+  };
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    const datas = {message, userId, roomId};
+    messenger.emit('sendMessage', datas, (res) => {
+      setMessage('');
+    });
+  };
   return (
     <Router>
     <div id="App">
@@ -100,8 +126,15 @@ const App = () => {
       )}
       {isOnline && (
         <>
-        <Contact onlineUsers={onlineUsers}/>
-        <Message />
+        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} />
+        <Message
+          roomId={roomId}
+          messages={messages}
+          userId={userId}
+          sendMessage={sendMessage}
+          message={message}
+          setMessage={setMessage}
+        />
         </>
       )}
 

@@ -4,6 +4,8 @@ const { server } = require('../index');
 // IMPORT CONTROLLERS
 const { signin, signup, disconnect } = require('../controllers/auth.controller');
 const { getUsers } = require('../controllers/user.controller');
+const { joinRoom } = require('../controllers/room.controller');
+const { sendMessage } = require('../controllers/message.controller');
 
 // ENTRY POINT
 const ios = socketio(server);
@@ -21,6 +23,8 @@ ios.on('connect', (socket) => {
 messenger.on('connect', (socket) => {
   socket.join('messenger');
   getUsers(messenger);
+  joinRoom(socket, messenger);
+  sendMessage(socket, messenger);
 
   socket.on('disconnect', () => {
     disconnect(socket, messenger);

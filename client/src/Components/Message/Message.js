@@ -24,7 +24,7 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import SendIcon from '@material-ui/icons/Send';
 import { Avatar, IconButton } from '@material-ui/core';
 
-const Message = () => {
+const Message = ({ roomId, messages, userId, sendMessage, message, setMessage }) => {
   return (
       <StyledMessage>
         <StyledMessageHeader>
@@ -53,26 +53,33 @@ const Message = () => {
         </StyledMessageHeaderRight>
         </StyledMessageHeader>
         <StyledMessageSection>
-          <StyledContactMessage>
-            <span>15 AOÛT, 13:14</span>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga, quasi numquam necessitatibus impedit cum autem rerum soluta ipsam nisi aspernatur.</p>
-          </StyledContactMessage>
-          <StyledPersonalMessage>
-            <span>15 AOÛT, 13:15</span>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel at impedit commodi rem expedita fuga distinctio labore temporibus quam? Quia animi natus quidem labore impedit soluta? Autem optio, dolorem unde, eligendi distinctio modi explicabo voluptas tempora vel magnam, tempore quos ad doloribus facilis suscipit quo. Magnam enim doloremque qui commodi.</p>
-          </StyledPersonalMessage>
+          {messages.map(message => {
+            return message.room === roomId && message.author === userId ? <StyledPersonalMessage><p>{message.data}</p></StyledPersonalMessage> :
+            message.room === roomId && message.author !== userId ? <StyledContactMessage><p>{message.data}</p></StyledContactMessage> : null
+          })}
         </StyledMessageSection>
         <StyledMessageFooter>
           <IconButton>
             <AddIcon />
           </IconButton>
           <StyledMessageFooterInput>
-            <textarea name="" id="" cols="20" rows="1" wrap="hard" placeholder="Ecrivez votre message..."></textarea>
+            <textarea
+            name=""
+            id=""
+            cols="20"
+            rows="1"
+            wrap="hard"
+            placeholder="Ecrivez votre message..."
+            value={message}
+            onKeyPress={e => e.key === "Enter" ? sendMessage(e) : null}
+            onChange={e => setMessage(e.target.value)}
+            >
+            </textarea>
             <IconButton>
               <EmojiEmotionsIcon />
             </IconButton>
           </StyledMessageFooterInput>
-          <IconButton>
+          <IconButton onClick={e => sendMessage(e)}>
             <SendIcon />
           </IconButton>
         </StyledMessageFooter>
