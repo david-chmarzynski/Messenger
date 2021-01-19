@@ -1,6 +1,7 @@
 // IMPORT QUERIES
-const { findRoomByUsersId, createRoom } = require('../queries/room.queries');
+const { findRoomByUsersId, createRoom, findRoomsByUserId } = require('../queries/room.queries');
 const { getMessagesByRoomId } = require('../queries/message.queries');
+const { findUserBySocketId, findUserById } = require('../queries/user.queries');
 
 
 exports.joinRoom = (socket, messenger) => {
@@ -37,4 +38,29 @@ exports.joinRoom = (socket, messenger) => {
       throw error;
     }
   });
+};
+
+exports.getRooms = async (socket) => {
+  let currentUser = await findUserBySocketId(socket.conn.id);
+  const rooms = await findRoomsByUserId(currentUser._id);
+  let contacts = [];
+  let users;
+  rooms.map(room => {
+    room.users.map(user => {
+      if(`${user}` !== `${currentUser._id}`) {
+        contacts.push(`${user}`);
+      }
+    })
+  });
+  const async = contacts.map(async (contact) => {
+    return await findUserById(`${contact}`);
+  });
+
+  Promise.all(async).then((completed) => {
+    users = completed;
+    const res = { rooms, users };
+    socket.emit('getRooms', res);
+  });
+
+  
 };

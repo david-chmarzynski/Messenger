@@ -19,7 +19,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import { Avatar, IconButton } from '@material-ui/core';
 
-const Contact = ({ onlineUsers, joinRoom, userId }) => {
+const Contact = ({ onlineUsers, joinRoom, userId, contacts }) => {
   return (
     <StyledContact>
       <StyledContactHeader>
@@ -56,16 +56,30 @@ const Contact = ({ onlineUsers, joinRoom, userId }) => {
         </IconButton>
           <input type="search" name="" id="" placeholder="Rechercher" />
       </StyledSearchBar>
-      <StyledPerson>
+      {contacts && contacts.map(contact => {
+        return contact &&
+        <StyledPerson id={contact._id} onClick={e => joinRoom(e)}>
+        <IconButton>
+          <Avatar />
+        </IconButton>
+        <StyledContactPersonName>
+          <h2>{contact.username}</h2>
+          </StyledContactPersonName>
+      </StyledPerson>
+      })}
+      {/* <StyledPerson>
           <IconButton>
             <Avatar />
           </IconButton>
-          <StyledContactPersonName>
-            <h2>David Chmarzynski</h2>
-            <p>Je suis le dernier message... ⸱ mar. <Avatar /></p>
-          </StyledContactPersonName>
-      </StyledPerson>
-    </StyledContact>
+          <StyledContactPersonName> */}
+            {/* {rooms && rooms.map(room => {
+              return room && <h2>{room.title}</h2>
+            })} */}
+            {/* <h2>David Chmarzynski</h2> */}
+            {/* <p>Je suis le dernier message... ⸱ mar. <Avatar /></p> */}
+          {/* </StyledContactPersonName>
+      </StyledPerson>*/}
+    </StyledContact> 
   );
 };
 

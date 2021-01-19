@@ -22,3 +22,7 @@ exports.createRoom = (title, userId, id) => {
     throw error;
   }
 };
+
+exports.findRoomsByUserId = (userId) => {
+  return Room.find({ "users": `${userId}` }).exec();
+};

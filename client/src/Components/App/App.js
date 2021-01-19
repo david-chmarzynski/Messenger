@@ -25,8 +25,11 @@ const App = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [onlineUsers, setOnlineUsers] = useState();
   const [roomId, setRoomId] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+  const [contacts, setContacts] = useState();
+  console.log("contacts :", contacts);
 
   // INIT SOCKET.IO
   useEffect(() => {
@@ -46,6 +49,11 @@ const App = () => {
 
         messenger.on('getMessages', (res) => {
           setMessages(res);
+        });
+
+        messenger.on('getRooms', (res) => {
+          setRooms(res.rooms);
+          setContacts(res.users);
         });
       });
     }
@@ -126,7 +134,7 @@ const App = () => {
       )}
       {isOnline && (
         <>
-        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} />
+        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} contacts={contacts} />
         {roomId && (
           roomId.map(room => (
             <Message
