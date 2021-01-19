@@ -29,7 +29,6 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [contacts, setContacts] = useState();
-  console.log("contacts :", contacts);
 
   // INIT SOCKET.IO
   useEffect(() => {

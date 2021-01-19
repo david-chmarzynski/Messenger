@@ -27,7 +27,6 @@ import { Avatar, IconButton } from '@material-ui/core';
 const Message = ({ roomId, messages, userId, sendMessage, message, setMessage }) => {
   const ref = useRef(null);
   const scrollToBottom = () => {
-    console.log("should scroll")
     ref.current.scrollTo({ 
       behavior: "smooth",
       top: document.getElementById('scroller').scrollHeight
