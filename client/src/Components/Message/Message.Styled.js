@@ -125,7 +125,8 @@ export const StyledMessageSection = styled.div`
   height: 87%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  overflow: auto;
+  ::-webkit-scrollbar { width: 0 !important }
 `;
 
 export const StyledPersonalMessage = styled.div`

@@ -39,14 +39,6 @@ const Contact = ({ onlineUsers, joinRoom, userId }) => {
         </StyledContactHeaderRight>
       </StyledContactHeader>
       <StyledOnlineBar>
-        {/* {onlineUsers && onlineUsers.map(user => (
-          <StyledOnlineContact id={user._id} onClick={e => joinRoom(e)}>
-          <IconButton>
-          <Avatar />
-          </IconButton>
-          <p>{user.username}</p>
-          </StyledOnlineContact>
-        ))} */}
         {onlineUsers && onlineUsers.map(user => {
           return user._id !== userId ? 
           <StyledOnlineContact id={user._id} onClick={e => joinRoom(e)}>

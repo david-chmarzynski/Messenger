@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 // IMPORT STYLED COMPONENTS
 import {
@@ -25,6 +25,16 @@ import SendIcon from '@material-ui/icons/Send';
 import { Avatar, IconButton } from '@material-ui/core';
 
 const Message = ({ roomId, messages, userId, sendMessage, message, setMessage }) => {
+  const ref = useRef(null);
+  const scrollToBottom = () => {
+    console.log("should scroll")
+    ref.current.scrollTo({ 
+      behavior: "smooth",
+      top: document.getElementById('scroller').scrollHeight
+    });
+  };
+
+  useEffect(scrollToBottom, [messages]);
   return (
       <StyledMessage>
         <StyledMessageHeader>
@@ -52,7 +62,7 @@ const Message = ({ roomId, messages, userId, sendMessage, message, setMessage })
           </IconButton>
         </StyledMessageHeaderRight>
         </StyledMessageHeader>
-        <StyledMessageSection>
+        <StyledMessageSection ref={ref} id="scroller">
           {messages.map(message => {
             return message.room === roomId && message.author === userId ? <StyledPersonalMessage><p>{message.data}</p></StyledPersonalMessage> :
             message.room === roomId && message.author !== userId ? <StyledContactMessage><p>{message.data}</p></StyledContactMessage> : null
