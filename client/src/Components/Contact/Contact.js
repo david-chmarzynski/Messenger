@@ -19,7 +19,8 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import { Avatar, IconButton } from '@material-ui/core';
 
-const Contact = () => {
+const Contact = ({ onlineUsers }) => {
+  console.log(onlineUsers);
   return (
     <StyledContact>
       <StyledContactHeader>
@@ -39,12 +40,14 @@ const Contact = () => {
         </StyledContactHeaderRight>
       </StyledContactHeader>
       <StyledOnlineBar>
-        <StyledOnlineContact>
-          <IconButton>
-            <Avatar />
+        {onlineUsers && onlineUsers.map(user => (
+          <StyledOnlineContact>
+          <IconButton key={user._id}>
+          <Avatar />
           </IconButton>
-          <p>David</p>
-        </StyledOnlineContact>
+          <p>{user.username}</p>
+          </StyledOnlineContact>
+        ))}
       </StyledOnlineBar>
       <StyledSearchBar>
         <IconButton>

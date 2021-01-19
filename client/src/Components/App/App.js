@@ -100,7 +100,7 @@ const App = () => {
       )}
       {isOnline && (
         <>
-        <Contact />
+        <Contact onlineUsers={onlineUsers}/>
         <Message />
         </>
       )}
