@@ -12,7 +12,7 @@ exports.setUserOffline = (userId) => {
   return User.findOneAndUpdate({ "_id": userId }, {$set: { "isOnline": false, "isAuthenticated": false , "socket_id": "" }}).exec();
 };
 
-exports.createUser = async (username, password, socketId) => {
+exports.createUser = async (username, password) => {
   const hashedPassword = await User.hashPassword(password);
   try {
     const newUser = new User({
@@ -20,10 +20,21 @@ exports.createUser = async (username, password, socketId) => {
       password: hashedPassword,
       isOnline: false,
       isAuthenticated: false,
-      socket_id: socketId
     });
     return newUser.save();
   } catch (error) {
     throw error;
   }
+};
+
+exports.findOnlineUsers = () => {
+  return User.find({ "isOnline": true }).exec();
+};
+
+exports.findUserBySocketId = (socketId) => {
+  return User.findOne({ "socket_id": socketId }).exec();
+};
+
+exports.findUserById = (userId) => {
+  return User.findOne({ "_id": userId }).exec();
 };

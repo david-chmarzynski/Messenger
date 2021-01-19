@@ -10,6 +10,7 @@ import Sign from '../Sign/Sign';
 
 // SOCKETS
 let ios;
+let messenger;
 
 const App = () => {
   // STATES
@@ -22,11 +23,25 @@ const App = () => {
   const [alert, setAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('Erreur');
   const [alertMessage, setAlertMessage] = useState('');
+  const [onlineUsers, setOnlineUsers] = useState();
 
   // INIT SOCKET.IO
   useEffect(() => {
     ios = io();
-  });
+  }, []);
+
+  // CONNECT CHATROOM NAMESPACE
+  useEffect(() => {
+    if(isOnline) {
+      messenger = io('/messenger');
+
+      messenger.on('connect', () => {
+        messenger.on('getUsers', (res) => {
+          setOnlineUsers(res);
+        });
+      });
+    }
+  }, [isOnline]);
 
   const signin = (e) => {
     e.preventDefault();

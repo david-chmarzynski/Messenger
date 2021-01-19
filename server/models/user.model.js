@@ -7,7 +7,7 @@ const userSchema = schema({
   password: { type: String, required: true },
   isOnline: { type: Boolean, required: true },
   isAuthenticated: { type: Boolean, required: true },
-  socket_id: { type: String, required: true}
+  socket_id: { type: String, required: false}
 });
 
 // HASH PASSWORD

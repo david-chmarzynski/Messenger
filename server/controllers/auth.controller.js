@@ -1,5 +1,6 @@
 // IMPORT QUERIES
-const { findUserByUsername, setUserOnline, createUser } = require('../queries/user.queries');
+const { findUserByUsername, setUserOnline, setUserOffline, createUser, findUserBySocketId } = require('../queries/user.queries');
+const { getUsers } = require('../controllers/user.controller');
 
 exports.signin = (socket) => {
   socket.on('signin', async ({username, password}, callback) => {
@@ -41,8 +42,7 @@ exports.signup = (socket) => {
     try {
       const existingUser = await findUserByUsername(username);
       if(!existingUser) {
-        const socketId = socket.conn.id;
-        const newUser = await createUser(username, password, socketId);
+        const newUser = await createUser(username, password);
         if(newUser) {
           let res = {
             status: 200,
@@ -67,4 +67,10 @@ exports.signup = (socket) => {
       throw error;
     }
   });
+};
+
+exports.disconnect = async (socket, messenger) => {
+  let user = await findUserBySocketId(socket.conn.id);
+  await setUserOffline(user._id);
+  getUsers(messenger);
 };

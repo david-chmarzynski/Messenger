@@ -103,3 +103,27 @@ export const StyledContactPersonName = styled.div`
     margin-left: .5rem;
   }
 `;
+
+export const StyledOnlineBar = styled.div`
+  width: 100%;
+  height: 7%;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-x: auto;
+
+`;
+
+export const StyledOnlineContact = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin-block-end: 0;
+    margin-block-start: -.5rem;
+    color: white;
+  }
+`;

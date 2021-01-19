@@ -8,7 +8,9 @@ import {
   StyledContactHeader,
   StyledContactHeaderLeft,
   StyledContactHeaderRight,
-  StyledContactPersonName
+  StyledContactPersonName,
+  StyledOnlineBar,
+  StyledOnlineContact
 } from './Contact.Styled';
 
 // Import == Material UI Icons
@@ -36,6 +38,14 @@ const Contact = () => {
           </IconButton>
         </StyledContactHeaderRight>
       </StyledContactHeader>
+      <StyledOnlineBar>
+        <StyledOnlineContact>
+          <IconButton>
+            <Avatar />
+          </IconButton>
+          <p>David</p>
+        </StyledOnlineContact>
+      </StyledOnlineBar>
       <StyledSearchBar>
         <IconButton>
           <SearchIcon />

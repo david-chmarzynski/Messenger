@@ -136,7 +136,7 @@ export const StyledPersonalMessage = styled.div`
 
   p {
     width: 45%;
-    margin: 1rem 1rem 1rem auto;
+    margin: 1rem 3rem 1rem auto;
     background-color: #0199ff;
     padding: .8rem 1rem;
     border-radius: 15px;
@@ -173,7 +173,7 @@ export const StyledContactMessage = styled.div`
     background-color: #3f4041;
     padding: .8rem 1rem;
     border-radius: 15px;
-    margin: 1em auto 1em 1em;
+    margin: 1em auto 1em 3em;
   }
 
   span {
