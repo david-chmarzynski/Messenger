@@ -27,13 +27,14 @@ exports.createUser = async (username, password) => {
   }
 };
 
-exports.findOnlineUsers = () => {
-  return User.find({ "isOnline": true }).exec();
-};
-
 exports.findUserBySocketId = (socketId) => {
   return User.findOne({ "socket_id": socketId }).exec();
 };
+
+exports.findOnlineUsers = (userId) => {
+  return User.find({$and: [{"isOnline": true}, {"_id": {$ne: userId}}]}).exec();
+};
+
 
 exports.findUserById = (userId) => {
   return User.findOne({ "_id": userId }).exec();

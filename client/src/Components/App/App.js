@@ -24,7 +24,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('Erreur');
   const [alertMessage, setAlertMessage] = useState('');
   const [onlineUsers, setOnlineUsers] = useState();
-  const [roomId, setRoomId] = useState('');
+  const [roomId, setRoomId] = useState([]);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
 
@@ -91,7 +91,7 @@ const App = () => {
     const id = e.currentTarget.id;
     const ids = {userId, id};
     messenger.emit('joinRoom', ids, (res) => {
-      setRoomId(res.roomId);
+      setRoomId([res.roomId]);
       setMessages(res.messages);
     });
   };
@@ -126,15 +126,19 @@ const App = () => {
       )}
       {isOnline && (
         <>
-        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} />
-        <Message
-          roomId={roomId}
-          messages={messages}
-          userId={userId}
-          sendMessage={sendMessage}
-          message={message}
-          setMessage={setMessage}
-        />
+        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} />
+        {roomId && (
+          roomId.map(room => (
+            <Message
+              roomId={room}
+              messages={messages}
+              userId={userId}
+              sendMessage={sendMessage}
+              message={message}
+              setMessage={setMessage}
+            />
+          ))
+        )}
         </>
       )}
 

@@ -140,7 +140,6 @@ export const StyledPersonalMessage = styled.div`
     background-color: #0199ff;
     padding: .8rem 1rem;
     border-radius: 15px;
-    max-width: 100%;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     -ms-hyphens: auto;
