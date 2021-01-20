@@ -11,10 +11,13 @@ exports.joinRoom = (socket, messenger) => {
       if(room.length > 0) {
         socket.join(`${room[0].title}`);
         let messages = await getMessagesByRoomId(room[0]._id);
+        let contact = await findUserById(id);
         let res = {
           status: 200,
           roomId: room[0]._id,
-          messages: messages
+          messages: messages,
+          contact: contact.username,
+          isOnline: contact.isOnline
         };
         callback(res);
       } else {

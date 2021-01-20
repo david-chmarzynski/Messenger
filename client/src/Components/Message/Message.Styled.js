@@ -92,7 +92,7 @@ export const StyledMessageFooterInput = styled.div`
   textarea {
     width: 90%;
     border: none;
-    color: #656667;
+    color: #FFFFFF;
     font-size: 1.2rem;
     overflow: auto;
     background-color: #2e3031;
@@ -139,7 +139,7 @@ export const StyledPersonalMessage = styled.div`
     max-width: 45%;
     margin: 1rem 3rem 1rem auto;
     background-color: #0199ff;
-    padding: .8rem 1rem;
+    padding: .5rem .7rem;
     border-radius: 15px;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
@@ -171,7 +171,7 @@ export const StyledContactMessage = styled.div`
     hyphens: auto;
     color: white;
     background-color: #3f4041;
-    padding: .8rem 1rem;
+    padding: .5rem .7rem;
     border-radius: 15px;
     margin: 1em auto 1em 3em;
   }

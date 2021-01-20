@@ -29,6 +29,8 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [contacts, setContacts] = useState();
+  const [contact, setContact] = useState('');
+  const [isContactOnline, setIsContactOnline] = useState(false);
 
   // INIT SOCKET.IO
   useEffect(() => {
@@ -57,6 +59,16 @@ const App = () => {
       });
     }
   }, [isOnline]);
+
+  // useEffect((onlineUsers) => {
+  //   onlineUsers.map(user => {
+  //     if(user._id === contact._id) {
+  //       setIsContactOnline(true);
+  //     } else {
+
+  //     }
+  //   })
+  // }, [onlineUsers]);
 
   const signin = (e) => {
     e.preventDefault();
@@ -100,6 +112,8 @@ const App = () => {
     messenger.emit('joinRoom', ids, (res) => {
       setRoomId([res.roomId]);
       setMessages(res.messages);
+      setContact(res.contact);
+      setIsContactOnline(res.isOnline);
     });
   };
 
@@ -110,6 +124,8 @@ const App = () => {
       setMessage('');
     });
   };
+
+
   return (
     <Router>
     <div id="App">
@@ -134,7 +150,7 @@ const App = () => {
       {isOnline && (
         <>
         <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} contacts={contacts} />
-        {roomId && (
+        {roomId ? (
           roomId.map(room => (
             <Message
               roomId={room}
@@ -143,8 +159,12 @@ const App = () => {
               sendMessage={sendMessage}
               message={message}
               setMessage={setMessage}
+              contact={contact}
+              isContactOnline={isContactOnline}
             />
           ))
+        ) : (
+          <Message />
         )}
         </>
       )}

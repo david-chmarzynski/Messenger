@@ -24,7 +24,7 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import SendIcon from '@material-ui/icons/Send';
 import { Avatar, IconButton } from '@material-ui/core';
 
-const Message = ({ roomId, messages, userId, sendMessage, message, setMessage }) => {
+const Message = ({ roomId, messages, userId, sendMessage, message, setMessage, contact, isContactOnline }) => {
   const ref = useRef(null);
   const scrollToBottom = () => {
     ref.current.scrollTo({ 
@@ -42,8 +42,8 @@ const Message = ({ roomId, messages, userId, sendMessage, message, setMessage })
             <Avatar />
           </IconButton>
           <StyledMessageInformation>
-            <h2>David Chmarzynski</h2>
-            <p>Actuellement en ligne</p>
+            <h2>{contact}</h2>
+            <p>{isContactOnline ? "Actuellement en ligne" : "Actuellement hors ligne"}</p>
           </StyledMessageInformation>
         </StyledMessageHeaderLeft>
         <StyledMessageHeaderRight>
@@ -78,7 +78,7 @@ const Message = ({ roomId, messages, userId, sendMessage, message, setMessage })
             cols="20"
             rows="1"
             wrap="hard"
-            placeholder="Ecrivez votre message..."
+            placeholder="Ecrivez un message..."
             value={message}
             onKeyPress={e => e.key === "Enter" ? sendMessage(e) : null}
             onChange={e => setMessage(e.target.value)}
