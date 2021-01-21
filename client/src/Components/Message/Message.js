@@ -23,6 +23,7 @@ import AddIcon from '@material-ui/icons/Add';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import SendIcon from '@material-ui/icons/Send';
 import { Avatar, IconButton } from '@material-ui/core';
+import ReactEmoji from 'react-emoji';
 
 const Message = ({ roomId, messages, userId, sendMessage, message, setMessage, contact, isContactOnline }) => {
   const ref = useRef(null);
@@ -63,8 +64,8 @@ const Message = ({ roomId, messages, userId, sendMessage, message, setMessage, c
         </StyledMessageHeader>
         <StyledMessageSection ref={ref} id="scroller">
           {messages.map(message => {
-            return message.room === roomId && message.author === userId ? <StyledPersonalMessage><p>{message.data}</p></StyledPersonalMessage> :
-            message.room === roomId && message.author !== userId ? <StyledContactMessage><p>{message.data}</p></StyledContactMessage> : null
+            return message.room === roomId && message.author === userId ? <StyledPersonalMessage><p>{ReactEmoji.emojify(message.data)}</p></StyledPersonalMessage> :
+            message.room === roomId && message.author !== userId ? <StyledContactMessage><p>{ReactEmoji.emojify(message.data)}</p></StyledContactMessage> : null
           })}
         </StyledMessageSection>
         <StyledMessageFooter>
