@@ -183,3 +183,30 @@ export const StyledContactMessage = styled.div`
     justify-content: center;
   }
 `;
+
+export const StyledMessengerMessage = styled.div`
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    max-width: 45%;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    color: white;
+    background-color: #3f4041;
+    padding: .8rem 1rem;
+    border-radius: 15px;
+    margin: auto auto auto auto;
+  }
+
+  span {
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+`;

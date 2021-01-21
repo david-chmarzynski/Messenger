@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Contact from '../Contact/Contact';
 import Message from '../Message/Message';
 import Sign from '../Sign/Sign';
+import Home from '../Home/Home';
 
 // SOCKETS
 let ios;
@@ -150,7 +151,7 @@ const App = () => {
       {isOnline && (
         <>
         <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} contacts={contacts} />
-        {roomId ? (
+        {roomId.length > 0 ? (
           roomId.map(room => (
             <Message
               roomId={room}
@@ -164,7 +165,7 @@ const App = () => {
             />
           ))
         ) : (
-          <Message />
+          <Home />
         )}
         </>
       )}
