@@ -9,18 +9,28 @@ exports.signin = (socket) => {
       if(user) {
         const match = await user.comparePasswords(password, user.password);
         if(match) {
-          await setUserOnline(user._id, socket.conn.id);
-          let res = {
-            status: 200,
-            message: "Vous êtes connecté",
-            username: user.username,
-            user_id: user._id
-          };
-          callback(res);
+          const isAlreadyOnline = user.isOnline;
+          if(!isAlreadyOnline) {
+            await setUserOnline(user._id, socket.conn.id);
+            let res = {
+              status: 200,
+              message: "Vous êtes connecté",
+              username: user.username,
+              user_id: user._id
+            };
+            callback(res);
+          } else {
+            let res = {
+              status: 403,
+              message: "Vous êtes déjà connecté sur un autre appareil"
+            };
+            callback(res);
+          }
+
         } else {
           let res = {
             status: 403,
-            message: "Mauvaise nom d'utilisateur ou mot de passe"
+            message: "Mauvais nom d'utilisateur ou mot de passe"
           };
           callback(res);
         } 
