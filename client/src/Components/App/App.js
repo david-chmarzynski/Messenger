@@ -145,9 +145,11 @@ const App = () => {
   const sendMessage = (e) => {
     e.preventDefault();
     const datas = {message, userId, roomId};
+    if(datas.message.length > 0) {
     messenger.emit('sendMessage', datas, (res) => {
       setMessage('');
-    });
+    });    
+  };
   };
 
 
