@@ -22,7 +22,8 @@ const Sign = ({
   repeatPassword,
   setRepeatPassword,
   setError,
-  setAlert
+  setAlert,
+  isResponsive
 }) => {
   const [signupLayer, setSignupLayer] = useState(false);
 
@@ -79,10 +80,14 @@ const Sign = ({
         <StyledFooter>
           <p onClick={handleSignup}>Pas encore inscrit ?</p>
           <p>Mot de passe oublié ?</p>
-          <p>Politique d'utilisation des données</p>
-          <p>Conditions</p>
-          <p>Politique d'utilisation des cookies</p>
-          <p>© Messenger - 2021</p>
+          {!isResponsive && (
+            <>
+              <p>Politique d'utilisation des données</p>
+              <p>Conditions</p>
+              <p>Politique d'utilisation des cookies</p>
+              <p>© Messenger - 2021</p>
+            </>
+          )}
         </StyledFooter>
       </StyledSignin>
       )}
@@ -131,9 +136,13 @@ const Sign = ({
         </StyledSignupForm>
         <StyledFooter>
           <p onClick={handleSignup}>Se connecter</p>
-          <p>Politique d'utilisation des données</p>
-          <p>Conditions</p>
-          <p>Politique d'utilisation des cookies</p>
+          {!isResponsive && (
+              <>
+                <p>Politique d'utilisation des données</p>
+                <p>Conditions</p>
+                <p>Politique d'utilisation des cookies</p>
+              </>
+          )}
           <p>© Messenger - 2021</p>
         </StyledFooter>
         </StyledSignup>

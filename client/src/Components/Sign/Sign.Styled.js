@@ -61,6 +61,10 @@ export const StyledFooter = styled.footer`
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 1024px) {
+    width: 80%;
+  }
 `;
 
 export const StyledSignup = styled.div`
