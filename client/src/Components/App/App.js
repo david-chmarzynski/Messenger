@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import './App.css';
 import io from 'socket.io-client';
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -8,6 +8,8 @@ import Contact from '../Contact/Contact';
 import Message from '../Message/Message';
 import Sign from '../Sign/Sign';
 import Home from '../Home/Home';
+import ContactM from '../Mobile/ContactM/ContactM';
+import MessageM from '../Mobile/MessageM/MessageM';
 
 // SOCKETS
 let ios;
@@ -32,6 +34,9 @@ const App = () => {
   const [contacts, setContacts] = useState();
   const [contact, setContact] = useState('');
   const [isContactOnline, setIsContactOnline] = useState(false);
+  const [isDisplayed, setIsDisplayed] = useState(false);
+  const [isResponsive, setIsResponsive] = useState(false);
+  const [width, setWidth] = useState(0);
 
   // INIT SOCKET.IO
   useEffect(() => {
@@ -70,6 +75,22 @@ const App = () => {
   //     }
   //   })
   // }, [onlineUsers]);
+
+  // GET WINDOW WIDTH & SET RESPONSIVE
+  useLayoutEffect(() => {
+    function updateSize() {
+      setWidth(window.innerWidth);
+      if (window.innerWidth <= 1024) {
+        setIsResponsive(true);
+      }
+      else {
+        setIsResponsive(false);
+      }
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   const signin = (e) => {
     e.preventDefault();
@@ -115,6 +136,9 @@ const App = () => {
       setMessages(res.messages);
       setContact(res.contact);
       setIsContactOnline(res.isOnline);
+      if(isResponsive) {
+        setIsDisplayed(true);
+      }
     });
   };
 
@@ -146,11 +170,14 @@ const App = () => {
           alert={alert}
           setAlert={setAlert}
           alertMessage={alertMessage}
+          isDisplayed={isDisplayed}
+          isResponsive={isResponsive}
         />
       )}
-      {isOnline && (
+
+      {/* {isOnline && !isResponsive && (
         <>
-        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} contacts={contacts} />
+        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} contacts={contacts} isDisplayed={isDisplayed} isResponsive={isResponsive} />
         {roomId.length > 0 ? (
           roomId.map(room => (
             <Message
@@ -162,13 +189,54 @@ const App = () => {
               setMessage={setMessage}
               contact={contact}
               isContactOnline={isContactOnline}
+              isDisplayed={isDisplayed}
+              isResponsive={isResponsive}
             />
           ))
         ) : (
           <Home />
         )}
         </>
+      )} */}
+
+      {isOnline && !isResponsive && (
+        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} contacts={contacts} />
       )}
+      {isOnline && !isResponsive && roomId.length > 0 && (
+        roomId.map(room => (
+          <Message
+            roomId={room}
+            messages={messages}
+            userId={userId}
+            sendMessage={sendMessage}
+            message={message}
+            setMessage={setMessage}
+            contact={contact}
+            isContactOnline={isContactOnline}
+          />
+      )))}
+      {isOnline && !isResponsive && roomId.length === 0 && (
+        <Home />
+      )}
+      
+      {/* RESPONSIVE */}
+      {isOnline && isResponsive && !isDisplayed && (
+        <ContactM onlineUsers={onlineUsers} joinRoom={joinRoom} userId={userId} contacts={contacts}/>
+      )}
+      {isOnline && isResponsive && isDisplayed && roomId.length > 0 && (
+        roomId.map(room => (
+          <MessageM
+            roomId={room}
+            messages={messages}
+            userId={userId}
+            sendMessage={sendMessage}
+            message={message}
+            setMessage={setMessage}
+            contact={contact}
+            isContactOnline={isContactOnline}
+            setIsDisplayed={setIsDisplayed}
+          />
+      )))}
 
     </div>
     </Router>

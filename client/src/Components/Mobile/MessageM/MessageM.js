@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // IMPORT STYLED COMPONENTS
 import {
@@ -12,12 +12,11 @@ import {
   StyledMessageInformation,
   StyledMessageHeaderRight,
   StyledMessageFooterInput
-} from './Message.Styled';
+} from './MessageM.styled';
 
 // IMPORT MUI COMPONENTS
 import PhoneIcon from '@material-ui/icons/Phone';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import SearchIcon from '@material-ui/icons/Search';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
@@ -25,7 +24,7 @@ import SendIcon from '@material-ui/icons/Send';
 import { Avatar, IconButton } from '@material-ui/core';
 import ReactEmoji from 'react-emoji';
 
-const Message = ({ roomId, messages, userId, sendMessage, message, setMessage, contact, isContactOnline, isDisplayed, isResponsive }) => {
+const MessageM = ({ roomId, messages, userId, sendMessage, message, setMessage, contact, isContactOnline, setIsDisplayed }) => {
   const ref = useRef(null);
   
   const scrollToBottom = () => {
@@ -36,10 +35,14 @@ const Message = ({ roomId, messages, userId, sendMessage, message, setMessage, c
   };
 
   useEffect(scrollToBottom, [messages]);
+
   return (
-      <StyledMessage>
+    <StyledMessage>
         <StyledMessageHeader>
         <StyledMessageHeaderLeft>
+          <IconButton>
+            <ArrowBackIosIcon onClick={() => setIsDisplayed(false)} />
+          </IconButton>
           <IconButton>
             <Avatar />
           </IconButton>
@@ -51,12 +54,6 @@ const Message = ({ roomId, messages, userId, sendMessage, message, setMessage, c
         <StyledMessageHeaderRight>
           <IconButton>
             <PhoneIcon />
-          </IconButton>
-          <IconButton>
-            <VideocamIcon />
-          </IconButton>
-          <IconButton>
-            <SearchIcon />
           </IconButton>
           <IconButton>
             <MoreVertIcon />
@@ -98,4 +95,4 @@ const Message = ({ roomId, messages, userId, sendMessage, message, setMessage, c
   );
 };
 
-export default Message;
+export default MessageM;
